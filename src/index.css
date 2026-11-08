@@ -1,0 +1,57 @@
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; height: 100%; }
+body { font-family: system-ui, sans-serif; background: #f5f5f4; color: #1c1917; }
+:root { --rojo: #b91c1c; --tinta: #1c1917; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; }
+a { color: var(--rojo); }
+.btn { display: inline-block; background: var(--rojo); color: #fff; border: 0; padding: 10px 18px; border-radius: 8px; font: 600 15px inherit; cursor: pointer; text-decoration: none; }
+.btn:disabled { background: #a8a29e; cursor: not-allowed; }
+.btn--claro { background: #fff; color: var(--rojo); border: 2px solid var(--rojo); }
+.btn--grande { padding: 14px 24px; font-size: 18px; }
+.estado { background: #fde68a; padding: 2px 8px; border-radius: 99px; font-weight: 600; }
+/* Landing */
+.landing { min-height: 100%; background: #1c1917; color: #fafaf9; overflow-x: hidden; }
+.hero > * { min-width: 0; }
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; min-height: 85vh; padding: 24px 6vw; gap: 24px; }
+.hero h1 { font-size: clamp(2.2rem, 6vw, 4.2rem); margin: 8px 0; line-height: 1.05; overflow-wrap: break-word; }
+.etiqueta { color: #fca5a5; text-transform: uppercase; letter-spacing: .1em; font-size: 13px; }
+.hero__botones { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.hero__escena { height: 420px; width: 100%; min-width: 0; position: relative; }
+.grupos { padding: 24px 6vw 40px; }
+.grupos__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+.tarjeta { background: #292524; border-top: 5px solid; padding: 14px; border-radius: 8px; display: flex; flex-direction: column; gap: 4px; }
+.tarjeta strong { font-size: 28px; }
+.landing footer { padding: 16px 6vw; border-top: 1px solid #44403c; }
+.landing a:not(.btn) { color: #fca5a5; }
+/* Formulario */
+.pagina { max-width: 640px; margin: 0 auto; padding: 20px 16px 60px; }
+.form fieldset { border: 1px solid #d6d3d1; border-radius: 10px; margin-bottom: 16px; background: #fff; display: grid; gap: 12px; min-width: 0; }
+.campo { display: grid; gap: 4px; font-weight: 600; min-width: 0; }
+.campo input, .campo select, .campo textarea { font: 400 16px inherit; padding: 9px; border: 1px solid #a8a29e; border-radius: 6px; width: 100%; }
+.error { color: #b91c1c; font-weight: 400; }
+.miniaturas { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+.miniaturas img { width: 90px; height: 90px; object-fit: cover; border-radius: 6px; }
+.miniaturas > div { position: relative; }
+.miniaturas button { position: absolute; top: 2px; right: 2px; }
+.confirmacion dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; background: #fff; padding: 16px; border-radius: 10px; }
+/* Operador */
+.operador { display: grid; grid-template-columns: minmax(0, 1fr) 360px; height: 100vh; }
+.operador__panel { padding: 16px; background: #0f172a; color: #e2e8f0; overflow-y: auto; border-left: 1px solid #1e293b; }
+.operador__panel a:not(.btn) { color: #7dd3fc; }
+.lista { list-style: none; padding: 0; }
+.lista button { width: 100%; text-align: left; margin: 3px 0; padding: 8px 10px; border-radius: 8px; border: 1px solid #334155; background: #111827; color: #e2e8f0; cursor: pointer; display: block; }
+.lista button.activo { background: #1e3a5f; }
+.lista small { display: block; color: #94a3b8; }
+.punto { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+.detalle { border-top: 1px solid #334155; margin-top: 12px; }
+.detalle p { margin: 6px 0; }
+.acciones { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; align-items: end; }
+.operador__panel select { padding: 8px; border-radius: 6px; max-width: 100%; }
+.volver { display: block; margin-top: 16px; }
+.vacio { color: #94a3b8; }
+@media (max-width: 800px) {
+  .hero { grid-template-columns: minmax(0, 1fr); min-height: auto; }
+  .hero__escena { height: 280px; order: -1; }
+  .operador { grid-template-columns: minmax(0, 1fr); grid-template-rows: 50vh auto; height: auto; }
+  .operador__panel { border-left: 0; }
+}
