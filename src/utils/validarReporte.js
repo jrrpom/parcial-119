@@ -10,5 +10,12 @@ export function validarReporte(f) {
   if (!f.barrio) e.barrio = 'Elige el barrio'
   if (!f.referencia.trim()) e.referencia = 'Indica un punto de referencia'
   if (!f.noAplica && !f.edificio.trim()) e.edificio = 'Escribe el edificio o marca «No aplica»'
+  // Preguntas de continuación del grupo 300
+  if (f.grupo === '300') {
+    if (!f.sexo) e.sexo = 'Indica el sexo'
+    if (!/^\d{1,3}$/.test(f.edad)) e.edad = 'Escribe la edad en años'
+    if (!f.consciente) e.consciente = 'Indica si está consciente'
+    if (!f.respira) e.respira = 'Indica si respira'
+  }
   return e
 }

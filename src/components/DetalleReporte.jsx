@@ -2,12 +2,18 @@ import { useState } from 'react'
 import { GRUPOS } from '../data/grupos.js'
 
 const UNIDADES = ['Máquina', 'Rescate', 'Ambulancia', 'HazMat']
+const CERRADO = ['Cerrado', 'Descartado']
 
-// Detalle de un reporte + acciones del operador (llamar, validar, despachar, cerrar, eliminar).
+// Detalle de un reporte + acciones del operador.
 // Se usa con key={reporte.id} para que la unidad elegida se reinicie al cambiar de reporte.
 export default function DetalleReporte({ reporte: r, onActualizar, onEliminar }) {
   const [unidad, setUnidad] = useState('')
   const nombreGrupo = GRUPOS.find((g) => g.codigo === r.grupo)?.nombre
+
+  const pedirInfo = () => {
+    const t = prompt('Mensaje para el ciudadano:', 'Por favor envía una foto del lugar y confirma tu ubicación.')
+    if (t?.trim()) onActualizar({ aviso: t.trim() })
+  }
 
   return (
     <section className="detalle">
@@ -15,12 +21,28 @@ export default function DetalleReporte({ reporte: r, onActualizar, onEliminar })
       <p><b>{r.nombres} {r.apellidos}</b> · {r.telefono}</p>
       <p><b>{r.grupo}</b> {nombreGrupo}</p>
       <p>«{r.queVe}»</p>
+      {r.grupo === 300 && r.sexo && (
+        <p>Paciente: {r.sexo}, {r.edad} años · Consciente: {r.consciente} · Respira: {r.respira}</p>
+      )}
       <p>{r.direccion}, {r.barrio}<br />Ref: {r.referencia}<br />Edificio: {r.noAplica ? 'No aplica' : r.edificio}</p>
-      <div className="miniaturas">{r.fotos?.map((u, i) => <img key={i} src={u} alt="Foto del reporte" />)}</div>
-      <p><a href={`https://www.google.com/maps?q=${r.lat},${r.lng}`} target="_blank" rel="noreferrer">Ver en Google Maps</a></p>
+      <div className="miniaturas">
+        {r.medios?.map((m, i) =>
+          m.tipo === 'video'
+            ? (m.url ? <video key={i} src={m.url} controls className="video-detalle" /> : <p key={i}>🎬 Video disponible solo en la sesión donde se envió.</p>)
+            : <img key={i} src={m.url} alt="Foto del reporte" />
+        )}
+      </div>
+      <p>
+        {r.ubicacionExacta ? '📍 Punto exacto marcado por el ciudadano' : 'Ubicación aproximada (centro del barrio)'}<br />
+        <a href={`https://www.google.com/maps?q=${r.lat},${r.lng}`} target="_blank" rel="noreferrer">Ver en Google Maps</a>
+      </p>
       <p>Estado: <span className="estado">{r.estado}</span>{r.unidad && ` · ${r.unidad}`}</p>
+      {r.aviso && <p>📨 Información solicitada: «{r.aviso}»</p>}
 
-      <a className="btn" href={`tel:${r.telefono}`}>Llamar</a>
+      <div className="acciones">
+        <a className="btn" href={`tel:${r.telefono}`}>Llamar</a>
+        {!CERRADO.includes(r.estado) && <button className="btn btn--claro" onClick={pedirInfo}>Solicitar más información</button>}
+      </div>
 
       {r.estado === 'Recibido' && (
         <div className="acciones">
@@ -41,9 +63,7 @@ export default function DetalleReporte({ reporte: r, onActualizar, onEliminar })
         </select>
         <button className="btn" disabled={r.estado !== 'Validado' || !unidad}
           onClick={() => onActualizar({ estado: 'Unidad despachada', unidad })}>Despachar</button>
-        {r.estado === 'Unidad despachada' && (
-          <button className="btn" onClick={() => onActualizar({ estado: 'Cerrado' })}>Cerrar caso</button>
-        )}
+        {r.estado === 'Unidad despachada' && <button className="btn" onClick={() => onActualizar({ estado: 'Cerrado' })}>Cerrar caso</button>}
       </div>
 
       <div className="acciones">

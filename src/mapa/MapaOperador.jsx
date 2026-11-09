@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { MapContainer, TileLayer, Marker, Popup, LayersControl, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, LayersControl, Circle, Tooltip, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import './mapa.css'
 import { crearIcono } from './iconos.js'
@@ -12,7 +12,7 @@ const CENTRO_CALI = [3.437, -76.522]
 //   reportes: [{ id, grupo, lat, lng, estado, barrio }]
 //   seleccionadoId: id del reporte seleccionado (o null)
 //   onSeleccionar: (id) => void
-export default function MapaOperador({ reportes = [], seleccionadoId = null, onSeleccionar }) {
+export default function MapaOperador({ reportes = [], zonas = [], seleccionadoId = null, onSeleccionar }) {
   const seleccionado = reportes.find((r) => r.id === seleccionadoId)
 
   return (
@@ -56,6 +56,12 @@ export default function MapaOperador({ reportes = [], seleccionadoId = null, onS
         </Marker>
       ))}
 
+      {/* Agrupación: zonas con varios reportes cercanos */}
+      {zonas.map((z, i) => (
+        <Circle key={i} center={[z.lat, z.lng]} radius={350} pathOptions={{ color: '#dc2626', fillOpacity: 0.15 }}>
+          <Tooltip>{z.n} reportes cercanos</Tooltip>
+        </Circle>
+      ))}
       <IrAlSeleccionado reporte={seleccionado} />
       <Leyenda reportes={reportes} />
     </MapContainer>
