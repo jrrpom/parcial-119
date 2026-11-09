@@ -27,8 +27,9 @@ export default function MapaOperador({ reportes = [], seleccionadoId = null, onS
         </LayersControl.BaseLayer>
         <LayersControl.BaseLayer name="Oscuro (centro de control)">
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>'
-            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+            className="tiles-oscuros"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
         </LayersControl.BaseLayer>
       </LayersControl>

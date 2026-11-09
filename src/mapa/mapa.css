@@ -18,8 +18,7 @@
   box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.6), 0 0 18px var(--color);
 }
 
-/* Animación de pulso YA ESCRITA.
-   TODO (estudiantes): aplicar la clase "pin--pulso" a los reportes en estado Recibido. */
+/* Animación de pulso para los reportes en estado Recibido */
 .pin--pulso::before {
   content: '';
   position: absolute;
@@ -33,6 +32,7 @@
   to { transform: scale(1.6); opacity: 0; }
 }
 
+/* Reportes Cerrado o Descartado: grises y con poca opacidad */
 .pin--apagado { opacity: 0.45; filter: grayscale(1); }
 
 /* Leyenda y controles sobre el mapa */
@@ -46,3 +46,6 @@
 }
 .leyenda__fila { display: flex; align-items: center; gap: 8px; margin: 3px 0; }
 .leyenda__punto { width: 10px; height: 10px; border-radius: 50%; }
+
+/* Modo oscuro del mapa: mismas piezas de OpenStreetMap, invertidas con un filtro (sin API key) */
+.tiles-oscuros { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9); }
