@@ -14,6 +14,7 @@ export function ReportesProvider({ children }) {
     try { localStorage.setItem(KEY, JSON.stringify(reportes)) }
     catch { alert('Memoria del navegador llena: borra reportes viejos (localStorage.clear()).') }
   }, [reportes])
+
   // Extra: sincroniza pestañas (ciudadano y operador) con el evento storage
   useEffect(() => {
     const f = (e) => e.key === KEY && setReportes(leer())
@@ -30,5 +31,9 @@ export function ReportesProvider({ children }) {
   const actualizar = (id, cambios) =>
     setReportes((prev) => prev.map((r) => (r.id === id ? { ...r, ...cambios } : r)))
 
-  return <Ctx.Provider value={{ reportes, agregar, actualizar }}>{children}</Ctx.Provider>
+  // Borrar un reporte o todos (solo para limpiar pruebas)
+  const eliminar = (id) => setReportes((prev) => prev.filter((r) => r.id !== id))
+  const limpiarTodo = () => setReportes([])
+
+  return <Ctx.Provider value={{ reportes, agregar, actualizar, eliminar, limpiarTodo }}>{children}</Ctx.Provider>
 }
